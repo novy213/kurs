@@ -114,8 +114,17 @@ namespace dzien_ostatni
                             Console.WriteLine();
                         }
                         Console.WriteLine("Podaj id elementu który chcesz usunąć");
-                        int wybor3 = int.Parse(Console.ReadLine());
-                        objects.Remove(objects.Where(item => item.id == wybor3).ToList()[0]);
+                        try
+                        {
+                            int wybor3 = int.Parse(Console.ReadLine());
+                            objects.Remove(objects.Where(item => item.id == wybor3).ToList()[0]);
+                        }
+                        catch(Exception ex)
+                        {
+                            Console.WriteLine("Wystąpił błąd:");
+                            Console.WriteLine(ex.Message);
+                            Console.ReadLine();
+                        }
                         break;
                     case 4:
                         StreamWriter streamWriter;
@@ -133,6 +142,7 @@ namespace dzien_ostatni
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.Message);
+                            Console.ReadLine();
                         }
                         break;
                     case 5:                        
@@ -158,49 +168,67 @@ namespace dzien_ostatni
                         break;
                     case 6:
                         Console.WriteLine("Podaj ile elementów chcesz wygenerować");
-                        int wybor4 = int.Parse(Console.ReadLine());
-                        Console.WriteLine("Podaj typ obiektów");
-                        Console.WriteLine("1.Kwadrat"); 
-                        Console.WriteLine("2.Prostokat"); 
-                        Console.WriteLine("3.Kolorowy kwadrat");
-                        int wybor5 = int.Parse(Console.ReadLine());
-                        switch (wybor5)
+                        try
                         {
-                            case 1:
-                                for(int i = 0; i < wybor4; i++)
+                            int wybor4 = int.Parse(Console.ReadLine());
+                            Console.WriteLine("Podaj typ obiektów");
+                            Console.WriteLine("1.Kwadrat");
+                            Console.WriteLine("2.Prostokat");
+                            Console.WriteLine("3.Kolorowy kwadrat");
+                            try
+                            {
+                                int wybor5 = int.Parse(Console.ReadLine());
+                                switch (wybor5)
                                 {
-                                    LewyGorny[0] = LosujLiczbe(r);
-                                    LewyGorny[1] = LosujLiczbe(r);
-                                    PrawyDolny[0] = LosujLiczbe(r);
-                                    PrawyDolny[1] = LosujLiczbe(r);
-                                    objects.Add(new Kwadrat(1, LewyGorny, PrawyDolny, id));
-                                    id++;
+                                    case 1:
+                                        for (int i = 0; i < wybor4; i++)
+                                        {
+                                            LewyGorny[0] = LosujLiczbe(r);
+                                            LewyGorny[1] = LosujLiczbe(r);
+                                            PrawyDolny[0] = LosujLiczbe(r);
+                                            PrawyDolny[1] = LosujLiczbe(r);
+                                            objects.Add(new Kwadrat(1, LewyGorny, PrawyDolny, id));
+                                            id++;
+                                        }
+                                        break;
+                                    case 2:
+                                        for (int i = 0; i < wybor4; i++)
+                                        {
+                                            LewyGorny[0] = LosujLiczbe(r);
+                                            LewyGorny[1] = LosujLiczbe(r);
+                                            PrawyDolny[0] = LosujLiczbe(r);
+                                            PrawyDolny[1] = LosujLiczbe(r);
+                                            bok = LosujLiczbe(r);
+                                            objects.Add(new Prostokat(2, LewyGorny, PrawyDolny, id, bok));
+                                            id++;
+                                        }
+                                        break;
+                                    case 3:
+                                        for (int i = 0; i < wybor4; i++)
+                                        {
+                                            LewyGorny[0] = LosujLiczbe(r);
+                                            LewyGorny[1] = LosujLiczbe(r);
+                                            PrawyDolny[0] = LosujLiczbe(r);
+                                            PrawyDolny[1] = LosujLiczbe(r);
+                                            kolor = LosujKolor(r);
+                                            objects.Add(new KolorowyKwadrat(3, LewyGorny, PrawyDolny, id, kolor));
+                                            id++;
+                                        }
+                                        break;
                                 }
-                                break;
-                            case 2:
-                                for (int i = 0; i < wybor4; i++)
-                                {
-                                    LewyGorny[0] = LosujLiczbe(r);
-                                    LewyGorny[1] = LosujLiczbe(r);
-                                    PrawyDolny[0] = LosujLiczbe(r);
-                                    PrawyDolny[1] = LosujLiczbe(r);
-                                    bok = LosujLiczbe(r);
-                                    objects.Add(new Prostokat(2, LewyGorny, PrawyDolny, id,bok));
-                                    id++;
-                                }
-                                break;
-                                case 3:
-                                for (int i = 0; i < wybor4; i++)
-                                {
-                                    LewyGorny[0] = LosujLiczbe(r);
-                                    LewyGorny[1] = LosujLiczbe(r);
-                                    PrawyDolny[0] = LosujLiczbe(r);
-                                    PrawyDolny[1] = LosujLiczbe(r);
-                                    kolor = LosujKolor(r);
-                                    objects.Add(new KolorowyKwadrat(3, LewyGorny, PrawyDolny, id, kolor));
-                                    id++;
-                                }
-                                break;
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("Wystąpił błąd:");
+                                Console.WriteLine(ex.Message);
+                                Console.ReadLine();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Wystąpił błąd:");
+                            Console.WriteLine(ex.Message);
+                            Console.ReadLine();
                         }
                         break;
                 }
