@@ -141,6 +141,7 @@ namespace dzien_ostatni
                         }
                         catch (Exception ex)
                         {
+                            Console.WriteLine("Wystąpił błąd:");
                             Console.WriteLine(ex.Message);
                             Console.ReadLine();
                         }
@@ -163,7 +164,9 @@ namespace dzien_ostatni
                         }
                         catch (Exception ex)
                         {
+                            Console.WriteLine("Wystąpił błąd:");
                             Console.WriteLine(ex.Message);
+                            Console.ReadLine();
                         }
                         break;
                     case 6:
