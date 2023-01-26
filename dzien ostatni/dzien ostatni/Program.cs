@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.Design.Serialization;
+﻿using Microsoft.Vbe.Interop.Forms;
+using System.ComponentModel.Design.Serialization;
 using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Security.Cryptography.X509Certificates;
@@ -9,6 +10,7 @@ namespace dzien_ostatni
     {
         static void Main(string[] args)
         {
+            Random r = new Random();
             int[] LewyGorny = new int[2];
             string fileName = "objects.txt";
             int[] PrawyDolny = new int[2];
@@ -24,6 +26,7 @@ namespace dzien_ostatni
                 Console.WriteLine("3.Usuń obiekt");
                 Console.WriteLine("4.Zapisz obiekty");
                 Console.WriteLine("5.Wczytaj obiekty");
+                Console.WriteLine("6.Generuj losowe obiekty");
                 int wybor = int.Parse(Console.ReadLine());
                 switch (wybor)
                 {
@@ -140,13 +143,63 @@ namespace dzien_ostatni
                             string line = streamReader.ReadLine();
                             while (line!=null)
                             {
-                                objects.Add(ReadFromFile(line, new Kwadrat()));
+                                objects.Add(ReadFromFile(line, new Kwadrat()));                                
                                 line = streamReader.ReadLine();
                             }
+                            id = objects[objects.Count-1].id;
+                            id++;
+                            streamReader.Close();
                         }
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.Message);
+                        }
+                        break;
+                    case 6:
+                        Console.WriteLine("Podaj ile elementów chcesz wygenerować");
+                        int wybor4 = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Podaj typ obiektów");
+                        Console.WriteLine("1.Kwadrat"); 
+                        Console.WriteLine("2.Prostokat"); 
+                        Console.WriteLine("3.Kolorowy kwadrat");
+                        int wybor5 = int.Parse(Console.ReadLine());
+                        switch (wybor5)
+                        {
+                            case 1:
+                                for(int i = 0; i < wybor4; i++)
+                                {
+                                    LewyGorny[0] = LosujLiczbe(r);
+                                    LewyGorny[1] = LosujLiczbe(r);
+                                    PrawyDolny[0] = LosujLiczbe(r);
+                                    PrawyDolny[1] = LosujLiczbe(r);
+                                    objects.Add(new Kwadrat(1, LewyGorny, PrawyDolny, id));
+                                    id++;
+                                }
+                                break;
+                            case 2:
+                                for (int i = 0; i < wybor4; i++)
+                                {
+                                    LewyGorny[0] = LosujLiczbe(r);
+                                    LewyGorny[1] = LosujLiczbe(r);
+                                    PrawyDolny[0] = LosujLiczbe(r);
+                                    PrawyDolny[1] = LosujLiczbe(r);
+                                    bok = LosujLiczbe(r);
+                                    objects.Add(new Prostokat(2, LewyGorny, PrawyDolny, id,bok));
+                                    id++;
+                                }
+                                break;
+                                case 3:
+                                for (int i = 0; i < wybor4; i++)
+                                {
+                                    LewyGorny[0] = LosujLiczbe(r);
+                                    LewyGorny[1] = LosujLiczbe(r);
+                                    PrawyDolny[0] = LosujLiczbe(r);
+                                    PrawyDolny[1] = LosujLiczbe(r);
+                                    kolor = LosujKolor(r);
+                                    objects.Add(new KolorowyKwadrat(3, LewyGorny, PrawyDolny, id, kolor));
+                                    id++;
+                                }
+                                break;
                         }
                         break;
                 }
@@ -219,6 +272,11 @@ namespace dzien_ostatni
             }
             return word;
         }
-        
+        public static int LosujLiczbe(Random r) => r.Next(1, 200);
+        public static string LosujKolor(Random r)
+        {
+            string[] kolory = { "Czerwony" , "Czarny","Niebieski","Zielony","Pomarańczowy","Brązowy","Biały","Bordowy","Granatowy","Ciemny zielony"};
+            return kolory[r.Next(kolory.Length)];
+        }
     }
 }
