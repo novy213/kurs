@@ -113,6 +113,7 @@ namespace dzien_ostatni
                             Console.WriteLine();
                             Console.WriteLine();
                         }
+                        Console.WriteLine("Podaj id elementu który chcesz usunąć");
                         int wybor3 = int.Parse(Console.ReadLine());
                         objects.Remove(objects.Where(item => item.id == wybor3).ToList()[0]);
                         break;
